@@ -1,0 +1,19 @@
+﻿@model SSRBase.LandingPage.Models.HomeViewModel
+
+@section Scripts {
+<script>
+    (function () {
+        window.CsnInsights = window.CsnInsights ||
+        {
+            eventMetadata: {}
+        };
+        window.CsnInsights.fireOnLoad = false;
+        window.CsnInsights.ignoreUrlFromBrowser = true;
+        window.CsnInsights.eventMetadata = { 'contentgroup1': 'smartbuyer', 'contentgroup2': '/popup' };
+        window.CsnInsights.metaData = { 'contentgroup1': 'smartbuyer', 'contentgroup2': '/popup' };
+    })();
+</script>
+}
+
+<div id="app" asp-prerender-module="./ssrBase/dist/main-server" asp-prerender-data='@Model.SSRViewModel'>
+</div>

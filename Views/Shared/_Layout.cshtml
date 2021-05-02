@@ -1,0 +1,22 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>carsales FACTS+</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="@ViewBag.BoostrapCss" />
+    <link rel="stylesheet" href="@ViewBag.ReactCss" />
+    <link rel="icon" href="https://resource.csnstatic.com/retail/favicons/carsales.ico" type="image/x-icon" />
+</head>
+
+<body>
+    @RenderSection("Scripts", required: false)
+
+    @RenderBody()
+
+    <script src="@ViewBag.VendorMainJsScript" asp-append-version="true"></script>
+    <script src="@ViewBag.VendorReactJsScript" asp-append-version="true"></script>
+    <script src="@ViewBag.ClientJsScript" asp-append-version="true" defer></script>
+
+</body>
+</html>
