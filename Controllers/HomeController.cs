@@ -8,13 +8,11 @@ namespace SSRBase.LandingPage.Controllers
     {
         public IActionResult Index()
         {
-
             var response = new HomeViewModel()
             {
                 SSRViewModel = new SSRViewModel()
                 {
                     DeviceType = "Desktop",
-                    SourceSystem = "Test"
                 }
             };
             return View(response);

@@ -8,6 +8,17 @@ const TerserPlugin = require('terser-webpack-plugin');
 
 module.exports = (env) => {
   const isDevBuild = env === 'Development';
+  const bundleOutputDir = '/ssrBase/dist';
+  const minCssExtractPlugin = new MiniCssExtractPlugin({
+    filename: '[name]-[chunkhash]-lib.css'
+  });
+  const webpackDefinPlugin = new webpack.DefinePlugin({
+    ENV: JSON.stringify(env),
+    GS: JSON.stringify(GlobalStyle),
+    CLIENT: JSON.stringify(true),
+    ISPRODUCTION: JSON.stringify(!isDevBuild)
+  });
+
   const sharedConfig = () => ({
     stats: { modules: false },
     resolve: {
@@ -39,20 +50,6 @@ module.exports = (env) => {
       ]
     },
     mode: isDevBuild ? 'development' : 'production'
-  });
-
-  // Configuration for client-side bundle suitable for running in browsers
-  const bundleOutputDir = '/ssrBase/dist';
-
-  const minCssExtractPlugin = new MiniCssExtractPlugin({
-    filename: '[name]-[chunkhash]-lib.css'
-  });
-
-  const webpackDefinPlugin = new webpack.DefinePlugin({
-    ENV: JSON.stringify(env),
-    GS: JSON.stringify(GlobalStyle),
-    CLIENT: JSON.stringify(true),
-    ISPRODUCTION: JSON.stringify(!isDevBuild)
   });
 
   const clientBundleConfig = merge(sharedConfig(), {
@@ -112,16 +109,9 @@ module.exports = (env) => {
       }
     },
     target: 'web',
-    plugins: [webpackDefinPlugin, minCssExtractPlugin].concat(
-      isDevBuild
-        ? []
-        : [
-            // new BundleAnalyzerPlugin()
-          ]
-    )
+    plugins: [webpackDefinPlugin, minCssExtractPlugin]
   });
 
-  // Configuration for server-side (prerendering) bundle suitable for running in Node
   const serverBundleConfig = merge(sharedConfig(), {
     resolve: { mainFields: ['main'] },
     entry: {
